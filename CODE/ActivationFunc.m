@@ -1,24 +1,24 @@
 function H = ActivationFunc( tempH, ActivationFunction,p)
 %ACTIVATIONFUNC Summary of this function goes here
 %   Detailed explanation goes here
-switch lower(ActivationFunction)%½«×Ö·û´®×ª»»ÎªĞ¡Ğ´
+switch lower(ActivationFunction)%å°†å­—ç¬¦ä¸²è½¬æ¢ä¸ºå°å†™
     case {'sig','sigmoid'}
         %%%%%%%% Sigmoid
         H = 1 ./ (1 + exp(-p.*tempH));
     case {'sin','sine'}
-        %%%%%%%% Sine    ¸µÀïÒ¶±ä»»
+        %%%%%%%% Sine    å‚…é‡Œå¶å˜æ¢
         H = sin(tempH);
-    case {'hardlim'}     %ãĞÖµĞÍ´«µİº¯Êı
+    case {'hardlim'}     %é˜ˆå€¼å‹ä¼ é€’å‡½æ•°
         %%%%%%%% Hard Limit
         H = double(hardlim(tempH));
     case {'tribas'}
-        %%%%%%%% Triangular basis function   Èı½ÇĞÎ¾¶Ïò»ù´«Êäº¯Êı
+        %%%%%%%% Triangular basis function   ä¸‰è§’å½¢å¾„å‘åŸºä¼ è¾“å‡½æ•°
         H = tribas(tempH);
     case {'radbas'}
-        %%%%%%%% Radial basis function   Èı½ÇĞÎ¾¶Ïò»ù´«Êäº¯Êı
+        %%%%%%%% Radial basis function   ä¸‰è§’å½¢å¾„å‘åŸºä¼ è¾“å‡½æ•°
         H = radbas(tempH);
     case {'gau'}
-        %¸ßË¹·Ö²¼£¬¦Ì=0£¬sigma=1 ±ê×¼ÕıÌ¬·Ö²¼ f(x)=1/(2*¦Ğ)^2*e^(-x*x/2)
+        %é«˜æ–¯åˆ†å¸ƒï¼ŒÎ¼=0ï¼Œsigma=1 æ ‡å‡†æ­£æ€åˆ†å¸ƒ f(x)=1/(2*Ï€)^2*e^(-x*x/2)
         H = 1./sqrt(2*pi)*exp(-1./2*(tempH.^2));
         %%%%%%%% ReLU
     case {'relu'}
@@ -31,16 +31,4 @@ switch lower(ActivationFunction)%½«×Ö·û´®×ª»»ÎªĞ¡Ğ´
         H = tempH;
     case {'tan'}
 %         H = tanh(p.*tempH);
-        H = tansig(tempH);
-    case {'prelu'}
-        alpha = 0.02;
-        idx = find(tempH(:)<0);
-        tempH(idx)=alpha.*tempH(idx);
-        H = tempH;
-    case {'gelu'}
-        H = tempH .* 1 ./ (1 + exp(-p.*tempH.*1.702));
-    case {'mor'}
-        H = cos(0.4.*tempH).*exp(-1./2*(tempH.^2));
-end
-end
-
+       
