@@ -31,4 +31,16 @@ switch lower(ActivationFunction)%将字符串转换为小写
         H = tempH;
     case {'tan'}
 %         H = tanh(p.*tempH);
-       
+        H = tansig(tempH);
+    case {'prelu'}
+        alpha = 0.02;
+        idx = find(tempH(:)<0);
+        tempH(idx)=alpha.*tempH(idx);
+        H = tempH;
+    case {'gelu'}
+        H = tempH .* 1 ./ (1 + exp(-p.*tempH.*1.702));
+    case {'mor'}
+        H = cos(0.4.*tempH).*exp(-1./2*(tempH.^2));
+end
+end
+
